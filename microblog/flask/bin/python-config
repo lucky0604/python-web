@@ -1,4 +1,4 @@
-#!/home/lucky/Documents/Code/Python/python-web/flask-basic/bin/python
+#!/home/lucky/Documents/Code/Python/python-web/microblog/flask/bin/python
 
 import sys
 import getopt
