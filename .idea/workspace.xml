@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89e6c48a-cb75-49d9-94b8-d78577015b75" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/app.db" afterPath="$PROJECT_DIR$/microblog/app.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/app/__init__.py" afterPath="$PROJECT_DIR$/microblog/app/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/app/models.py" afterPath="$PROJECT_DIR$/microblog/app/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/app/templates/base.html" afterPath="$PROJECT_DIR$/microblog/app/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/app/views.py" afterPath="$PROJECT_DIR$/microblog/app/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/db_repository/versions/002_migration.py" afterPath="$PROJECT_DIR$/microblog/db_repository/versions/002_migration.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microblog/run.py" afterPath="$PROJECT_DIR$/microblog/run.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/microblog/tmp/associations/https-open.login.yahooapis.com-7zqRNWhy5.EKPdEJ9.anF4sU5jI-9RwdRA1GxFNDdzgaQFDaJfYIpEs" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,8 +17,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/microblog/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="753">
-              <caret line="83" column="37" lean-forward="true" selection-start-line="83" selection-start-column="37" selection-end-line="83" selection-end-column="37" />
+            <state relative-caret-position="357">
+              <caret line="61" column="33" lean-forward="true" selection-start-line="61" selection-start-column="33" selection-end-line="61" selection-end-column="33" />
               <folding>
                 <element signature="e#160#192#0" expanded="true" />
               </folding>
@@ -380,8 +374,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1922" height="1029" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14791666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14791666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -507,8 +502,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/microblog/app/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="753">
-          <caret line="83" column="37" lean-forward="true" selection-start-line="83" selection-start-column="37" selection-end-line="83" selection-end-column="37" />
+        <state relative-caret-position="357">
+          <caret line="61" column="33" lean-forward="true" selection-start-line="61" selection-start-column="33" selection-end-line="61" selection-end-column="33" />
           <folding>
             <element signature="e#160#192#0" expanded="true" />
           </folding>
