@@ -10,7 +10,7 @@
 
 from flask import Flask
 # 初始化数据库
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 # 告诉flask去读取以及使用配置文件
