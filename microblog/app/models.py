@@ -8,6 +8,7 @@
 
 
 from app import db
+from hashlib import md5
 
 
 class User(db.Model):
@@ -16,6 +17,14 @@ class User(db.Model):
     email = db.Column(db.String(128), index = True, unique = True)
     # add relationship with posts
     posts = db.relationship('Post', backref = 'author', lazy = 'dynamic')
+    # about user
+    about_me = db.Column(db.String(140))
+    # last visiting date
+    last_seen = db.Column(db.DateTime)
+
+    # 增加用户头像服务
+    def avatar(self, size):
+        return 'http://www.gravatar.com/avatar/' + md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
 
     # 以下方法是Flask-Login扩展需要在User类中实现的特定的方法，但是类如何实现这些方法没有要求
 
