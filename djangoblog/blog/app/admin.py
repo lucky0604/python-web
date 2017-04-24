@@ -3,6 +3,9 @@ from .models import Post, Category, Tag
 
 # Register your models here.
 
-admin.site.register(Post)
+class PostAdmin(admin.ModelAdmin):
+  list_display = ['title', 'created_time', 'modified_time', 'category', 'author']
+
+admin.site.register(Post, PostAdmin)
 admin.site.register(Tag)
 admin.site.register(Category)
