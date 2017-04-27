@@ -131,3 +131,24 @@ class RestPasswordView(View):
                     emailVerify.delete()
                     Message.objects.create(body = '用户 %s 于 %s 修改了密码' % (email, timezone.now()))
                     return HttpResponseRedirect(reverse('login'))
+                else:
+                    return HttpResponse('两次密码不一致')
+            else:
+                return HttpResponse(rest_form.errors)
+        else:
+            admin_password_form = AdminRestPasswordForm(request.POST)
+            if admin_password_form.is_valid():
+                oldPassword = request.POST.get('oldPassword')
+                newPassword = request.POST.get('newPassword')
+                retypePassword = request.POST.get('retypePassword')
+                user = authenticate(username = request.user.email, password = oldPassword)
+                if newPassword == retypePassword and user:
+                    user.password = make_password(newPassword)
+                    user.save()
+                    logout(request)
+                    Message.objects.create(body = '用户 %s 于 %s 通过后台修改了密码' % (request.user.email, timezone.now()))
+                    return HttpResponseRedirect(reverse('login'))
+                else:
+                    return HttpResponse('请确保两次密码相同')
+            else:
+                return HttpResponse(admin_password_form.errors)
