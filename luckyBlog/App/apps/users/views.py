@@ -93,7 +93,7 @@ class LogoutView(View):
 
 class PasswordView(View):
     def get(self, request):
-        code = request.GET.get('code': '')
+        code = request.GET.get('code', '')
         if code:
             try:
                 EmailVerifyCode.objects.get(code = code)
@@ -122,7 +122,7 @@ class RestPasswordView(View):
             if rest_form.is_valid():
                 password = request.POST.get('password', '')     # 获取密码
                 retype_password = request.POST.get('retype_password', '')   # 确认密码
-                if password = retype_password:
+                if password == retype_password:
                     emailVerify = EmailVerifyCode.objects.get(code = code)
                     email = emailVerify.email
                     user = UserProfile.objects.get(email = email)
