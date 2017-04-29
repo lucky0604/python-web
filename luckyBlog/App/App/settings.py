@@ -1,3 +1,10 @@
+# @Author: lucky
+# @Date:   2017-04-26T23:47:16+08:00
+# @Last modified by:   lucky
+# @Last modified time: 2017-04-29T22:26:04+08:00
+
+
+
 """
 Django settings for App project.
 
@@ -137,6 +144,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 指定默认的用户表
 AUTH_USER_MODEL = 'users.UserProfile'
+
+# 发送邮件
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'lemond002@gmail.com'
+EMAIL_HOST_PASSWORD = 'cherry520'
+EMAIL_USE_TLS = False
+EMAIL_FROM = 'lemond002@gmail.com'
+
 
 # 分页
 PAGINATION_SETTINGS = {

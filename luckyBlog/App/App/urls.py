@@ -1,3 +1,10 @@
+# @Author: lucky
+# @Date:   2017-04-29T00:01:24+08:00
+# @Last modified by:   lucky
+# @Last modified time: 2017-04-29T23:47:00+08:00
+
+
+
 """App URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -15,11 +22,15 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from users.views import RegisterView, LoginView, LogoutView, PasswordView, RestPasswordView
+from blog.views import *
 
 urlpatterns = [
     # users
     url(r'^login/$', LoginView.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^register/$', RegisterView.as_view(), name="register"),
-    url(r'^password/$', PasswordView.as_view(), name="password")
+    url(r'^password/$', PasswordView.as_view(), name="password"),
+
+    # blog
+    url(r'^$', ArticleListView.as_view(), name = 'index')
 ]
