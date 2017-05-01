@@ -32,5 +32,8 @@ urlpatterns = [
     url(r'^password/$', PasswordView.as_view(), name="password"),
 
     # blog
-    url(r'^$', ArticleListView.as_view(), name = 'index')
+    url(r'^$', ArticleListView.as_view(), name = 'index'),
+
+    #admin
+    url(r'^admin/', include('admin.urls', namespace = 'admin')),
 ]
