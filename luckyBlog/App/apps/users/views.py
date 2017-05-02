@@ -114,11 +114,11 @@ class PasswordView(View):
         except UserProfile.DoesNotExist:
             return HttpResponse('用户不存在')
 
-class RestPasswordView(View):
+class ResetPasswordView(View):
     def post(self, request):
         code = request.POST.get('code')
         if code:
-            rest_form = RestPasswordForm(request.POST)
+            rest_form = ResetPasswordForm(request.POST)
             if rest_form.is_valid():
                 password = request.POST.get('password', '')     # 获取密码
                 retype_password = request.POST.get('retype_password', '')   # 确认密码
@@ -136,7 +136,7 @@ class RestPasswordView(View):
             else:
                 return HttpResponse(rest_form.errors)
         else:
-            admin_password_form = AdminRestPasswordForm(request.POST)
+            admin_password_form = AdminResetPasswordForm(request.POST)
             if admin_password_form.is_valid():
                 oldPassword = request.POST.get('oldPassword')
                 newPassword = request.POST.get('newPassword')

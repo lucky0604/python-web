@@ -76,7 +76,7 @@
             <h3 class="box-title">Change password</h3>
           </div>
 
-          <form action="{% url 'restpassword' %}" class="form-horizontal" method="post">
+          <form action="{% url 'resetpassword' %}" class="form-horizontal" method="post">
             {% csrf_token %}
             <div class="box-body">
               <div class="form-group">

@@ -3,8 +3,8 @@ from django import forms
 __all__ = [
     'RegisterForm',
     'LoginForm',
-    'RestPasswordForm',
-    'AdminRestPasswordForm'
+    'ResetPasswordForm',
+    'AdminResetPasswordForm'
 ]
 
 class RegisterForm(forms.Form):
@@ -23,12 +23,12 @@ class LoginForm(forms.Form):
     email = forms.CharField(required = True, max_length = 150)
     password = forms.CharField(required = True, max_length = 128)
 
-class RestPasswordForm(forms.Form):
+class ResetPasswordForm(forms.Form):
     code = forms.CharField()
     password = forms.CharField(required = True, min_length = 5)
     retype_password = forms.CharField(required = True, min_length = 5)
 
-class AdminRestPasswordForm(forms.Form):
+class AdminResetPasswordForm(forms.Form):
     oldPassword = forms.CharField(required = True)
     newPassword = forms.CharField(required = True, min_length = 5)
     retypeNewPassword  =forms.CharField(required = True, min_length = 5)
