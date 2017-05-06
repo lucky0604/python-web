@@ -23,6 +23,11 @@ def create_shortcode(instance, size = 6):
     new_code = code_generator(size = size)
     # if wanna use models, use instance.__class__
     SoftURL = instance.__class__
+
+    print(instance)
+    print(instance.__class__)
+    print(instance.__class__.__name__)
+
     qs_exists = SoftURL.objects.filter(shortcode = new_code).exists()
 
     return create_shortcode(size = size) if qs_exists else new_code
