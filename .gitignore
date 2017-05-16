@@ -89,6 +89,7 @@ ENV/
 bin/
 include/
 pip-selfcheck.json
+pyvenv.cfg
 
 # Spyder project settings
 .spyderproject
