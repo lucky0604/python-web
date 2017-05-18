@@ -2,6 +2,10 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+
+# add tag functionality
+from taggit.managers import TaggableManager
+
 # Create your models here.
 
 # use model manager
@@ -26,6 +30,8 @@ class Post(models.Model):
     # apply model manager
     objects = models.Manager()    # default manager
     published = PublishedManager()    # custom manager
+
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-publish',)
