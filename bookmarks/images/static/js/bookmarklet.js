@@ -51,7 +51,7 @@
     var conflict = typeof window.$ != 'undefined';
     // create the script and point to google api
     var script = document.createElement('script');
-    script.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/' + jqeury_version + '/jquery.min.js');
+    script.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/' + jquery_version + '/jquery.min.js');
     // add the script to the 'head' for processing
     document.getElementsByTagName('head')[0].appendChild(script);
     // create a way to wait until script loading
