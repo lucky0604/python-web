@@ -13,6 +13,10 @@ urlpatterns = [
 
     url(r'^$', views.dashboard, name = 'dashboard'),
 
+    # user follow urls
+    # don't put this url at the bottom
+    url(r'^users/follow/$', views.user_follow, name = 'user_follow'),
+
     # change password views
     url(r'^password-change/$', 'django.contrib.auth.views.password_change', name = 'password_change'),
     url(r'^password-change/done/$', 'django.contrib.auth.views.password_change_done', name = 'password_change_done'),
@@ -32,5 +36,4 @@ urlpatterns = [
     # users urls
     url(r'^users/$', views.user_list, name = 'user_list'),
     url(r'^users/(?P<username>[-\w]+)/$', views.user_detail, name = 'user_detail'),
-
 ]
