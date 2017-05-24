@@ -46,6 +46,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'images',
     'account',
+    'actions',
     'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
