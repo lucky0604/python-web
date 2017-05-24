@@ -29,4 +29,8 @@ urlpatterns = [
     #register urls
     url(r'^register/$', views.register, name = 'register'),
 
+    # users urls
+    url(r'^users/$', views.user_list, name = 'user_list'),
+    url(r'^users/(?P<username>[-\w]+)/$', views.user_detail, name = 'user_detail'),
+
 ]
