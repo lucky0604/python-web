@@ -19,17 +19,7 @@ from actions.utils import create_action
 # display the activity stream
 from actions.models import Action
 
-@login_required
-def dashboard(request):
-    # display all actions by default
-    actions = Action.objects.exclude(user = request.user)
-    following_ids = request.user.following.values_list('id', flat = True)
 
-    if following_ids:
-        # if user is following others, retrieve only their actions
-        actions = actions.filter(user_id__in = following_ids)
-    actions = actions[:10]
-    return render(request, 'account/dashboard.html', {'section': 'dashboard', 'actions': actions})
 
 # Create your views here.
 def user_login(request):
@@ -91,6 +81,17 @@ def edit(request):
 
     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
 
+@login_required
+def dashboard(request):
+    # display all actions by default
+    actions = Action.objects.all().exclude(user = request.user)
+    following_ids = request.user.following.values_list('id', flat = True)
+
+    if following_ids:
+        # if user is following others, retrieve only their actions
+        actions = actions.filter(user_id__in=following_ids).select_related('user', 'user__profile').prefetch_related('target')
+    actions = actions[:10]
+    return render(request, 'account/dashboard.html', {'section': 'dashboard', 'actions': actions})
 
 @login_required
 def user_list(request):

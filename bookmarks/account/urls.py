@@ -5,6 +5,7 @@ urlpatterns = [
     # post views
 #    url(r'^login/$', views.user_login, name = 'login'),
 
+    
 
     # login / logout views
     url(r'^login/$', 'django.contrib.auth.views.login', name = 'login'),
@@ -36,4 +37,6 @@ urlpatterns = [
     # users urls
     url(r'^users/$', views.user_list, name = 'user_list'),
     url(r'^users/(?P<username>[-\w]+)/$', views.user_detail, name = 'user_detail'),
+
+    
 ]
