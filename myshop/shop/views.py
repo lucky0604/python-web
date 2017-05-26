@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404
 # building catelog views
 from .models import Category, Product
 
+# adding products to the cart
+from cart.forms import CartAddProductForm
+
 # Create your views here.
 def product_list(request, category_slug = None):
     category = None
@@ -16,4 +19,5 @@ def product_list(request, category_slug = None):
 # retrieve and display a single product
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id = id, slug = slug, available = True)
-    return render(request, 'shop/product/detail.html', {'product': product})
+    cart_product_form = CartAddProductForm()
+    return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form})
