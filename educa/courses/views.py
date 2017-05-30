@@ -23,6 +23,9 @@ from django.forms.models import modelform_factory
 from django.apps import apps
 from .models import Module, Content
 
+# reordering modules and contents
+from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
+
 # Create your views here.
 
 class OwnerMixin(object):
@@ -139,3 +142,20 @@ class ModuleContentListView(TemplateResponseMixin, View):
     def get(self, request, module_id):
         module = get_object_or_404(Module, id = module_id, course__owner = request.user)
         return self.render_to_response({'module': module})
+
+
+# a view that receives the new order of module's id encoded in JSON
+class ModuleOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+    def post(self, request):
+        for id, order in self.request_json.items():
+            Module.objects.filter(id = id, course__owner = request.user).update(order = order)
+        return self.render_json_response({'saved': 'OK'})
+
+
+# a similar view to order a module's contents
+class ContentOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+    def post(self, request):
+        for id, order in self.request_json.items():
+            Content.objects.filter(id = id, module__course__owner = request.user).update(order = order)
+
+        return self.render_json_response({'saved': 'OK'})
