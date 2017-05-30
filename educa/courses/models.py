@@ -36,7 +36,7 @@ class Course(models.Model):
         return self.title
 
 class Module(models.Model):
-    cource = models.ForeignKey(Course, related_name = 'modules')
+    course = models.ForeignKey(Course, related_name = 'modules')
     title = models.CharField(max_length = 200)
     description = models.TextField(blank = True)
     # custom model field
