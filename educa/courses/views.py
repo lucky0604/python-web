@@ -33,6 +33,9 @@ from .models import Subject
 # displaying a single course overview
 from django.views.generic.detail import DetailView
 
+# add the enroll button to the course overview page
+from students.forms import CourseEnrollForm
+
 # Create your views here.
 
 class OwnerMixin(object):
@@ -185,3 +188,8 @@ class CourseListView(TemplateResponseMixin, View):
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/course/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+        context['enroll_form'] = CourseEnrollForm(initial = {'course': self.object})
+        return context
