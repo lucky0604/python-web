@@ -13,6 +13,8 @@ class Image(models.Model):
     description = models.TextField(blank = True)
     created = models.DateField(auto_now_add = True, db_index = True)
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'images_liked', blank = True)
+    # add a field to denormalize the total number of likes to boost performance in queries that involve this field
+#    total_likes = models.PositiveIntegerField(db_index = True, default = 0)
 
     # override the save() method of the Image model to automatically generate the slug field based on the value of the title field
     def save(self, *args, **kwargs):

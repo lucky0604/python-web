@@ -46,6 +46,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'images',
     'account',
+    'actions',
     'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,3 +130,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
 }
+
+# integrate Redis into the project
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
