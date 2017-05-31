@@ -36,6 +36,9 @@ from django.views.generic.detail import DetailView
 # add the enroll button to the course overview page
 from students.forms import CourseEnrollForm
 
+# cache some queries in the views
+from django.core.cache import cache
+
 # Create your views here.
 
 class OwnerMixin(object):
@@ -176,7 +179,12 @@ class CourseListView(TemplateResponseMixin, View):
     template_name = 'courses/course/list.html'
 
     def get(self, request, subject = None):
-        subjects = Subject.objects.annotate(total_courses = Count('courses'))
+#        subjects = Subject.objects.annotate(total_courses = Count('courses'))
+        # caching the data
+        subjects = cache.get('all_subjects')
+        if not subjects:
+            subjects = Subject.objects.annotate(total_courses = Count('courses'))
+            cache.set('all_subjects', subjects)
         courses = Course.objects.annotate(total_modules = Count('modules'))
 
         if subject:
