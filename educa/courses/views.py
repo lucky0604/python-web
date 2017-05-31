@@ -185,11 +185,22 @@ class CourseListView(TemplateResponseMixin, View):
         if not subjects:
             subjects = Subject.objects.annotate(total_courses = Count('courses'))
             cache.set('all_subjects', subjects)
-        courses = Course.objects.annotate(total_modules = Count('modules'))
+
+        # caching based on dynamic data
+        all_courses = Course.objects.annotate(total_modules = Count('modules'))
 
         if subject:
             subject = get_object_or_404(Subject, slug = subject)
-            courses = courses.filter(subject = subject)
+            key = 'subject_{}_courses'.format(subject.id)
+            courses = cache.get(key)
+            if not courses:
+                courses = all_courses.filter(subject = subject)
+                cache.set(key, courses)
+        else:
+            courses = cache.get('all_courses')
+            if not courses:
+                courses = all_courses
+                cache.set('all_courses', courses)
         return self.render_to_response({'subjects': subjects, 'subject': subject, 'courses': courses})
 
 # create a view for displaying a single course overview
