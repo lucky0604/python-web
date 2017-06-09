@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 # Create your tests here.
 
@@ -20,11 +21,16 @@ class AccountsTest(APITestCase):
             'password': 'somepassword'
         }
         response = self.client.post(self.create_url, data, format = 'json')
+        user = User.objects.latest('id')
 
         # make sure there are two users in the database
         self.assertEqual(User.objects.count(), 2)
         # returning a 201 created code
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # add token authenticate
+        token = Token.objects.get(user = user)
+        self.assertEqual(response.data['token'], token.key)
 
 
     '''
