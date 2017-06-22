@@ -1,16 +1,12 @@
 <template>
   <div class="login-box">
-    <h1>Registration</h1>
-    
+    <h1>Login</h1>
     <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="Username" prop="username">
         <el-input type="text" v-model="ruleForm.username" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="password">
         <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="Display name" prop="displayName">
-        <el-input type="text" v-model="ruleForm.displayName" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button>
@@ -22,60 +18,29 @@
 
 <script>
   import {mapActions} from 'vuex'
+  import api from '@/api'
   export default {
-    // name: 'Login',
-    data () {
-      
-      const checkName = (rule, value, cb) => {
-        if (!value) {
-          return cb(new Error('Username cannot be empty'))
-        }
-      }
-      const validatePass = (rule, value, cb) => {
-        if (value === '') {
-          cb(new Error('Please enter the password'))
-        }
-        cb()
-      }
-      const validateDisplayName = (rule, value, cb) => {
-        if (value === '') {
-          cb(new Error('Please enter the Display name'))
-        }
-        cb()
-      } 
+    data() {
       return {
         ruleForm: {
-          password: '',
-          displayName: '',
-          username: ''
-        },
-        /*
-        rules: {
-          pass: [
-            {validator: validatePass, trigger: 'blur'}
-          ],
-          displayName: [
-            {validator: validateDisplayName, trigger: 'blur'}
-          ],
-          username: [
-            {
-              validator: checkName,
-              trigger: 'blur'
-            }
-          ]
+          username: '',
+          password: ''
         }
-        */
-        
       }
     },
-    computed: {
-      ...mapActions({
-        UserReg: 'UserReg'
-      })
-    },
     methods: {
+      ...mapActions(['UserLogin']),
       submitForm(formName) {
-        this.$store.dispatch('UserReg', this.ruleForm)  
+
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$store.dispatch('UserLogin', this.ruleForm).then(res => {
+              if (res) {
+                this.$router.push('/')
+              }
+            })
+          }
+        })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
@@ -83,15 +48,3 @@
     }
   }
 </script>
-
-<style>
-  .login-box {
-    width: 400px;
-    height: 600px;
-    position: absolute;
-    left: 50%;
-    margin-left: -200px;
-    top: 50%;
-    margin-top: -300px;
-  }
-</style>

@@ -3,17 +3,25 @@ from django.contrib.auth.models import User
 from .models import Account
 from rest_framework.exceptions import ValidationError
 
+ROLE_CHOICES = [
+    'admin',
+    'editor',
+    'guest'
+]
+
 class AccountCreateSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source = 'user.username')
     password = serializers.CharField(source = 'user.password', style={'input_type': 'password'})
+    role = serializers.ChoiceField(choices = ROLE_CHOICES)
 
     class Meta:
         model = Account
         fields = [
-        'id',
-        'username',
-        'displayName',
-        'password'
+            'id',
+            'username',
+            'displayName',
+            'password',
+            'role'
         ]
 
     def create(self, validated_data):
@@ -28,39 +36,44 @@ class AccountCreateSerializer(serializers.ModelSerializer):
         return account
 
 class AccountSerializer(serializers.ModelSerializer):
+    role = serializers.ChoiceField(choices=ROLE_CHOICES)
     class Meta:
         model = Account
         fields = [
-        'id',
-        'username',
-        'displayName',
+            'id',
+            'username',
+            'displayName',
+            'role'
         ]
 
 class AccountRetrieveSerializer(serializers.ModelSerializer):
+    role = serializers.ChoiceField(choices=ROLE_CHOICES)
     class Meta:
         model = Account
         fields = [
-        'id',
-        'username',
-        'displayName'
+            'id',
+            'username',
+            'displayName',
+            'role'
         ]
 
 class UpdateAccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(source = 'user.password', allow_blank = True, allow_null = True)
     displayName = serializers.CharField(allow_blank = True, allow_null = True)
-
+    role = serializers.ChoiceField(choices=ROLE_CHOICES)
     class Meta:
         model = Account
         fields = [
-        'displayName',
-        'password'
+            'displayName',
+            'password',
+            'role'
         ]
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user', None)
         user = User.objects.get(id = instance.user.id)
         instance.displayName = self.value_or_keep(instance.displayName, validated_data.get('displayName', instance.displayName))
-
+        instance.role = self.value_or_keep(instance.role, validated_data.get('role', instance.role))
         if user_data['password'] != '':
             user.set_password(user_data['password'])
         user.save()
@@ -101,4 +114,4 @@ class AuthenticateSerializer(serializers.ModelSerializer):
         if user.check_password(password):
             attrs['account'] = user.account
             return attrs
-        raise ValidationError('Incorrect login/password')
+        raise ValidationError('Incorrect reg/password')
