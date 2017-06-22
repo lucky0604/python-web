@@ -2,7 +2,8 @@ import actions from './actions'
 import mutations from './mutations'
 
 const state = {
-    user: {},
+  user: {},
+  isLogin: false
 }
 
 export default {
