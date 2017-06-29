@@ -1,37 +1,18 @@
-import api from '@/api'
-import { USER_REG, USER_LOGIN, USER_LOGOUT } from './mutation-types'
+import {registUser} from 'api/regist'
+import {REG_USER} from './mutation-types'
+import {Message} from 'element-ui'
 
-export default {
-  UserReg: ({ commit }, data) => {
-    api.localReg(data).then(function(res) {
-        commit(USER_REG, res.data)
-        console.log(res.data)
+export const RegUser = ({commit}, data) => {
+  registUser(data).then(function(res){
+    if (res.status === 201) {
+      commit(REG_USER, res.data.key)
+      Message({
+        message: 'Regist Successfully',
+        type: 'success'
       })
-      .catch(function(err) {
-        console.log(err)
-      })
-  },
-  UserLogin: ({commit}, data) => {
-    /*
-    api.localLogin(data).then(function(res) {
-      commit(USER_LOGIN, res.data.token)
-    })
-      .catch(function(err) {
-        console.log(err)
-      })
-      */
-    return new Promise((resolve, reject) => {
-      api.localLogin(data).then(res => {
-        if (res) {
-          commit(USER_LOGIN, res.data.token)
-        }
-        resolve(res.data.token)
-      }, error => {
-        reject(error)
-      })
-    })
-  },
-  UserLogout: ({commit}) => {
-    commit(USER_LOGOUT)
-  }
+    }
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
 }

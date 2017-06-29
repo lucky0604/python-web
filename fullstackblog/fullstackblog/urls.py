@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name = 'profile-redirect'),
     url(r'^docs/$', get_swagger_view(title='API docs'), name = 'api_docs'),
+    url(r'^$', TemplateView.as_view(template_name = 'index.html')),
 ]

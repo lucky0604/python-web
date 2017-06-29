@@ -1,13 +1,13 @@
-import actions from './actions'
+import * as actions from './actions'
 import mutations from './mutations'
 
 const state = {
-  user: {},
-  isLogin: false
+  token: ''
 }
 
+
 export default {
-    state,
-    actions,
-    mutations,
+  actions,
+  state,
+  mutations
 }
