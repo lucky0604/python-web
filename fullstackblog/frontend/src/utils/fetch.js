@@ -11,7 +11,9 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   // some actions before request is sent
   if (store.getters.token) {
-    config.headers['X-Token'] = store.getters.token     // make each request has a token --- ['X-Token'] is custom key
+    const token = store.getters.token
+    //config.headers['X-Token'] = store.getters.token     // make each request has a token --- ['X-Token'] is custom key
+    config.headers.Authorization = `token ${token}`
   }
   return config
 }, error => {
@@ -22,6 +24,7 @@ service.interceptors.request.use(config => {
 
 
 // response interceptors
+/*
 service.interceptors.response.use(
   response => response,
   error => {
@@ -34,5 +37,6 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+*/
 
 export default service

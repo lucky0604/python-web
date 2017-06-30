@@ -1,8 +1,13 @@
 import * as actions from './actions'
 import mutations from './mutations'
+import Cookies from 'js-cookie'
 
 const state = {
-  token: ''
+  token: Cookies.get('Admin-Token'),
+  user: '',
+  name: '',
+  groups: [],
+
 }
 
 

@@ -1,1 +1,5 @@
 export const REG_USER = 'REG_USER'
+export const SET_TOKEN = 'SET_TOKEN'
+export const SET_EMAIL = 'SET_EMAIL'
+export const SET_GROUPS = 'SET_GROUPS'
+export const SET_NAME = 'SET_NAME'

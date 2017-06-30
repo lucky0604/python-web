@@ -2,6 +2,7 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
+from django.contrib.auth.models import Group
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -60,6 +61,7 @@ class RegisterView(CreateAPIView):
         serializer = self.get_serializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         user = self.perform_create(serializer)
+        user.groups.add(Group.objects.get(name = 'admin'))
         headers = self.get_success_headers(serializer.data)
 
         return Response(self.get_response_data(user), status = status.HTTP_201_CREATED, headers = headers)

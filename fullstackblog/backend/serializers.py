@@ -107,13 +107,15 @@ class TokenSerializer(serializers.ModelSerializer):
         model = TokenModel
         fields = ('key',)
 
+
+
 class UserDetailsSerializer(serializers.ModelSerializer):
     '''
     User model w/o password
     '''
     class Meta:
         model = UserModel
-        fields = ('pk', 'username', 'email', 'first_name', 'last_name')
+        fields = ('pk', 'username', 'email', 'first_name', 'last_name', 'groups')
         read_only_fields = ('email',)
 
 class JWTSerializer(serializers.Serializer):

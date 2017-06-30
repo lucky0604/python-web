@@ -1,24 +1,17 @@
 <template>
   <div class="login-container">
-    <el-form autoComplete="on" :model="registForm" ref="registForm" label-position="left" label-width="0px" class="card-box login-form">
+    <el-form autoComplete="on" :model="loginForm" ref="loginForm" label-position="left" label-width="0px" class="card-box login-form">
       <h3 class="title">System Registration</h3>
-      <el-form-item prop="username">
-        <el-input type="text" v-model="registForm.username" autoComplete="on" placeholder="Username"></el-input>
-      </el-form-item>
       <el-form-item prop="email">
 
-        <el-input type="text" v-model="registForm.email" autoComplete="on" placeholder="Email"></el-input>
+        <el-input type="text" v-model="loginForm.username" autoComplete="on" placeholder="Username"></el-input>
       </el-form-item>
       <el-form-item prop="password1">
 
-        <el-input type="password" v-model="registForm.password1" autoComplete="on" placeholder="Password"></el-input>
-      </el-form-item>
-      <el-form-item prop="password2">
-
-        <el-input type="password" v-model="registForm.password2" autoComplete="on" placeholder="Retype password"></el-input>
+        <el-input type="password" v-model="loginForm.password" autoComplete="on" placeholder="Password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width: 100%;" @click="handleSubmit">Regist</el-button>
+        <el-button type="primary" style="width: 100%;" @click="handleSubmit">Login</el-button>
       </el-form-item>
       <router-link to="/login" class="forget-pwd">
         Already has an account? Directly login.
@@ -31,29 +24,30 @@
   import {isValidEmail} from 'utils/validate'
   import {mapActions} from 'vuex'
   export default {
-    name: 'regist',
+    name: 'login',
     data() {
-      
       return {
-        registForm: {
+        loginForm: {
           username: '',
-          email: '',
-          password1: '',
-          password2: ''
+          password: '',
         },
       }
     },
     computed: {
-      ...mapActions({
-        RegUser: 'RegUser',
-      })
     },
     methods: {
       handleSubmit(){
-        this.$refs['registForm'].validate((valid) => {
+        this.$refs['loginForm'].validate((valid) => {
           if (valid) {
-            this.$store.dispatch('RegUser', this.registForm)
-            this.$router.push('/login')
+            this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+              this.$router.push({path: '/'})
+            })
+            .catch(err => {
+              console.log(err)
+            })
+          } else {
+            console.log('error submit')
+            return false
           }
         })
       }

@@ -10,10 +10,80 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import 'normalize.css/normalize.css'
 import 'styles/index.scss'
+import * as filters from './filter'
+import {getInfo} from './api/login'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+// permission judge
+function hasPermission(groups, permissionRoles) {
+  if (groups.indexOf(1) >= 0) return true
+  if (!permissionRoles) return true
+  return groups.some(group => permissionRoles.indexOf(role) >= 0)
+}
+
+// register global progress
+const whiteList = ['/login', '/reg']
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth && whiteList.indexOf(to.path) === -1) {
+    if (store.getters.token) {
+      next()
+    } else {
+      next({
+        path: '/login',
+      })
+    }
+  }
+
+  /**
+  // NProgress.start()   // enable NProgress
+  if (store.getters.token) {    // check if there's token
+    if (to.path === '/login') {
+      next({path: '/'})
+    } else {
+      if (store.getters.groups.length === 0) {   // check the current user has already get the user_info
+        store.dispatch('GetInfo').then(res => {
+          const groups = res.data.groups
+          
+          store.dispatch('GenerateRoutes', {groups}).then(() => {
+            router.addRoutes(store.getters.addRoutes)
+            next(to.path)
+          })
+          
+          console.log(groups)
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        if (hasPermission(store.getters.groups, to.meta.group)) {
+          next()
+        } else {
+          next({path: '/401', query: {noGoBack: true}})
+        }
+      }
+    }
+  } */
+  else {
+    if (whiteList.indexOf(to.path) !== -1) {    // in the white list
+      next()
+    } else {
+      next('/login')
+      // NProgress.done()
+    }
+  }
+})
+
+/*
+router.afterEach(() => {
+  NProgress.done()
+})
+*/
 
 /* eslint-disable no-new */
 new Vue({
