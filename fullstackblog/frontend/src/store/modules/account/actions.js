@@ -1,5 +1,13 @@
+/*
+ * @CreateTime: Jul 3, 2017 12:07 AM
+ * @Author: Lucky
+ * @Contact: Lucky
+ * @Last Modified By: undefined
+ * @Last Modified Time: Jul 3, 2017 12:14 AM
+ * @Description: Modify Here, Please 
+ */
 import {registUser} from 'api/regist'
-import {loginByUsername, getInfo} from 'api/login'
+import {loginByUsername, getInfo, logout} from 'api/login'
 import {REG_USER} from './mutation-types'
 import {Message} from 'element-ui'
 import Cookies from 'js-cookie'
@@ -45,6 +53,20 @@ export const GetInfo = ({commit, state}) => {
       commit('SET_GROUPS', data.groups)
       commit('SET_NAME', data.username)
       resolve(res)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+// log out
+export const LogOut = ({commit, state}) => {
+  return new Promise((resolve, reject) => {
+    logout().then(res => {
+      commit('SET_TOKEN', '')
+      commit('SET_GROUPS', [])
+      Cookies.remove('Admin-Token')
+      resolve()
     }).catch(err => {
       reject(err)
     })

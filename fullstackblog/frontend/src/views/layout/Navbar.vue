@@ -2,21 +2,21 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <levelbar></levelbar>
+    <tabs-view></tabs-view>
     <screenfull class="screenfull"></screenfull>
     <el-dropdown class="avatar-container" trigger="click">
+      <div class="avatar-wrapper">
+        <i class="el-icon-caret-bottom"></i>
+      </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
         <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
             Homepage
           </el-dropdown-item>
         </router-link>
-        <router-link class="inlineBlock" to="">
-          <el-dropdown-item>
-            Config
-          </el-dropdown-item>
-        </router-link>
+        
         <el-dropdown-item divided>
-          <span @click="logout" style="display:block">Logout</span>
+          <span @click="logout" style="display:block;">Logout</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -28,10 +28,12 @@ import {mapGetters} from 'vuex'
 import Levelbar from './Levelbar'
 import Hamburger from 'components/Hamburger'
 import Screenfull from 'components/Screenfull'
+import TabsView from './TabsView'
 
 export default {
   components: {
     Levelbar,
+    TabsView,
     Hamburger,
     Screenfull
   },

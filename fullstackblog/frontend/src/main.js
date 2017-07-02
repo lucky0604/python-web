@@ -12,9 +12,15 @@ import 'normalize.css/normalize.css'
 import 'styles/index.scss'
 import * as filters from './filter'
 import Cookies from 'js-cookie'
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+import Sticky from 'components/Sticky'
+import vueWaves from './directives/waves'
 
 Vue.config.productionTip = false
-
+Vue.component('multiselect', Multiselect)
+Vue.component('Sticky', Sticky)
+Vue.use(vueWaves)
 Vue.use(ElementUI)
 
 Object.keys(filters).forEach(key => {
