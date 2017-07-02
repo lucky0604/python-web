@@ -9,7 +9,10 @@ from django.utils.encoding import force_text
 from rest_framework import serializers, exceptions
 from rest_framework.exceptions import ValidationError
 
-from .models import TokenModel
+from .models import (
+    TokenModel,
+    Articles
+)
 from .utils import import_callable
 
 # get the user model
@@ -255,3 +258,15 @@ class PasswordChangeSerializer(serializers.Serializer):
         if not self.logout_on_password_change:
             from django.contrib.auth import update_session_auth_hash
             update_session_auth_hash(self.request, self.user)
+
+
+'''
+Articles ------------------------------------------
+'''
+
+class ArticlelistSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Articles
+        fields = ('id', 'title', 'slug', 'publish')
+        read_only_fields = ('publish',)

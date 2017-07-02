@@ -1,8 +1,9 @@
 from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from backend.views import (
     LoginView, LogoutView, UserDetailsView, PasswordChangeView,
-    PasswordResetView, PasswordResetConfirmView
+    PasswordResetView, PasswordResetConfirmView, CreateView
 )
 
 urlpatterns = [
@@ -12,4 +13,9 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), name = 'rest_logout'),
     url(r'^user/$', UserDetailsView.as_view(), name = 'rest_user_details'),
     url(r'^password/change/$', PasswordChangeView.as_view(), name = 'rest_password_change'),
+
+    # articles
+    url(r'articlelists/$', CreateView.as_view(), name = 'article_create')
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

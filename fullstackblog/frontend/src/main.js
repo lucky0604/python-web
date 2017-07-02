@@ -11,7 +11,7 @@ import 'nprogress/nprogress.css'
 import 'normalize.css/normalize.css'
 import 'styles/index.scss'
 import * as filters from './filter'
-import {getInfo} from './api/login'
+import Cookies from 'js-cookie'
 
 Vue.config.productionTip = false
 
@@ -25,19 +25,46 @@ Object.keys(filters).forEach(key => {
 function hasPermission(groups, permissionRoles) {
   if (groups.indexOf(1) >= 0) return true
   if (!permissionRoles) return true
-  return groups.some(group => permissionRoles.indexOf(role) >= 0)
+  return groups.some(group => permissionRoles.indexOf(group) >= 0)
 }
 
 // register global progress
 const whiteList = ['/login', '/reg']
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth && whiteList.indexOf(to.path) === -1) {
-    if (store.getters.token) {
-      next()
+  if (store.getters.token) {
+    if (to.path === '/login') {
+      next({path: '/'})
     } else {
+      if (store.getters.groups.length === 0) {
+        alert('main router')
+        store.dispatch('GetInfo').then(res => {
+          const groups = res.data.groups
+          console.log(groups)
+          store.dispatch('GenerateRoutes', {groups}).then(() => {
+            router.addRoutes(store.getters.addRouters)
+            next(to.path)
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        if (hasPermission(store.getters.groups, to.meta.group)) {
+          next()
+        } else {
+          alert()
+        }
+      }
+      /*
       next({
         path: '/login',
       })
+      */
+    } 
+  } else {
+    if (whiteList.indexOf(to.path) !== -1) {
+      next()
+    } else {
+      next('/login')
     }
   }
 
@@ -69,14 +96,6 @@ router.beforeEach((to, from, next) => {
       }
     }
   } */
-  else {
-    if (whiteList.indexOf(to.path) !== -1) {    // in the white list
-      next()
-    } else {
-      next('/login')
-      // NProgress.done()
-    }
-  }
 })
 
 /*

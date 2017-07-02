@@ -13,7 +13,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .app_settings import (
@@ -22,7 +22,13 @@ from .app_settings import (
     PasswordChangeSerializer, JWTSerializer, create_token
 )
 
-from .models import TokenModel
+from .serializers import (
+    ArticlelistSerializer
+)
+
+from .models import (
+    TokenModel, Articles
+)
 from .utils import jwt_encode
 
 sensitive_post_parameters_m = method_decorator(
@@ -210,3 +216,23 @@ class PasswordChangeView(GenericAPIView):
         serializer.is_valid(raise_exception = True)
         serializer.save()
         return Response({'detail': _('New password has been saved.')})
+
+
+'''
+Articles -------------------------------------
+'''
+
+class CreateView(ListCreateAPIView):
+    queryset = Articles.objects.all()
+    serializer_class = ArticlelistSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_queryset(self):
+        user = self.request.user
+        return Articles.objects.filter(author = user)
+
+    def get_object(self):
+        return self.request.user

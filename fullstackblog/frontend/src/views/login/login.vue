@@ -41,6 +41,7 @@
           if (valid) {
             this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
               this.$router.push({path: '/'})
+              alert('login component')
             })
             .catch(err => {
               console.log(err)
