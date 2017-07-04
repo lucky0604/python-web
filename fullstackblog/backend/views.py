@@ -2,6 +2,8 @@ from django.contrib.auth import (
     login as django_login,
     logout as django_logout
 )
+from django.db.models import Q
+
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -10,11 +12,20 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
 
+from rest_framework.serializers import ModelSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListCreateAPIView
+from rest_framework.generics import (
+    GenericAPIView,
+    RetrieveUpdateAPIView,
+    ListCreateAPIView,
+    ListAPIView,
+    CreateAPIView,
+    RetrieveAPIView
+)
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from .permissions import IsOwnerOrReadOnly
 
 from .app_settings import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
@@ -22,12 +33,10 @@ from .app_settings import (
     PasswordChangeSerializer, JWTSerializer, create_token
 )
 
-from .serializers import (
-    ArticlelistSerializer
-)
+
 
 from .models import (
-    TokenModel, Articles
+    TokenModel
 )
 from .utils import jwt_encode
 
@@ -218,21 +227,3 @@ class PasswordChangeView(GenericAPIView):
         return Response({'detail': _('New password has been saved.')})
 
 
-'''
-Articles -------------------------------------
-'''
-
-class CreateView(ListCreateAPIView):
-    queryset = Articles.objects.all()
-    serializer_class = ArticlelistSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def get_queryset(self):
-        user = self.request.user
-        return Articles.objects.filter(author = user)
-
-    def get_object(self):
-        return self.request.user

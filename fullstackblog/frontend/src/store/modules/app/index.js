@@ -7,7 +7,8 @@ const state = {
     opened: !+Cookies.get('sidebarStatus')
   },
   theme: 'default',
-  livenewsChannels: Cookies.get('livenewsChannels') || '[]'
+  livenewsChannels: Cookies.get('livenewsChannels') || '[]',
+  visitedViews: []
 }
 
 export default {

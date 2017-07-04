@@ -9,9 +9,9 @@ from django.utils.encoding import force_text
 from rest_framework import serializers, exceptions
 from rest_framework.exceptions import ValidationError
 
+
 from .models import (
     TokenModel,
-    Articles
 )
 from .utils import import_callable
 
@@ -119,7 +119,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = ('pk', 'username', 'email', 'first_name', 'last_name', 'groups')
-        read_only_fields = ('email',)
+        # read_only_fields = ('email',)
 
 class JWTSerializer(serializers.Serializer):
     '''
@@ -260,13 +260,3 @@ class PasswordChangeSerializer(serializers.Serializer):
             update_session_auth_hash(self.request, self.user)
 
 
-'''
-Articles ------------------------------------------
-'''
-
-class ArticlelistSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Articles
-        fields = ('id', 'title', 'slug', 'publish')
-        read_only_fields = ('publish',)
