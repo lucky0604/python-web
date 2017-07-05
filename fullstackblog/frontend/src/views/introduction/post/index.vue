@@ -1,0 +1,118 @@
+<template>
+  <div class="simple-container" :style="{height:height + 'px', zIndex: zIndex}">
+    <el-form :model="introForm" ref="introForm">
+      <el-form-item prop="article">
+        <textarea :id="id" v-model="introForm.article"></textarea>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('introForm')">Submit</el-button>
+        <el-button @click="submitForm('introForm')">Reset Form</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script>
+import 'simplemde/dist/simplemde.min.css'
+import SimpleMDE from 'simplemde'
+
+export default {
+  name: 'Sticky',
+  props: {
+    value: String,
+    id: {
+      type: String,
+      default: 'markdown-editor'
+    },
+    autofocus: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    height: {
+      type: Number,
+      default: 150
+    },
+    zIndex: {
+      type: Number,
+      default: 10
+    },
+    toolbar: {
+      type: Array
+    }
+  },
+  data() {
+    return {
+      introForm: {
+        article: ''
+      },
+      simplemde: null,
+      hasChange: false
+    }
+  },
+  watch: {
+    value(val) {
+      if (val === this.simplemde.value() && !this.hasChange) return
+      this.simplemde.value(val)
+    }
+  },
+  mounted() {
+    this.simplemde = new SimpleMDE({
+      element: document.getElementById(this.id),
+      autofocus: this.autofocus,
+      toolbar: this.toolbar,
+      insertTexts: {
+        link: ['[', ']( )']
+      },
+      placeholder: this.placeholder
+    })
+    if (this.value) {
+      this.simplemde.value(this.value)
+    }
+    this.simplemde.codemirror.on('change', () => {
+      if (this.hasChange) {
+        this.hasChange = true
+      }
+      this.$emit('input',this.simplemde.value())
+    })
+  },
+  destroyed() {
+    this.simplemde = null
+  }
+}
+</script>
+
+<style>
+  .simplemde-container .CodeMirror {
+    /*height: 150px;*/
+    min-height: 150px;
+  }
+  .simplemde-container .CodeMirror-scroll{
+     min-height: 150px;
+  }
+
+ .simplemde-container .CodeMirror-code{
+   padding-bottom: 40px;
+ }
+  .simplemde-container  .editor-statusbar {
+    display: none;
+  }
+
+  .simplemde-container .CodeMirror .CodeMirror-code .cm-link {
+    color: #1482F0;
+  }
+
+  .simplemde-container .CodeMirror .CodeMirror-code .cm-string.cm-url {
+    color: #2d3b4d;
+    font-weight: bold;
+  }
+
+  .simplemde-container .CodeMirror .CodeMirror-code .cm-formatting-link-string.cm-url {
+    padding: 0 2px;
+    font-weight: bold;
+    color: #E61E1E;
+  }
+</style>

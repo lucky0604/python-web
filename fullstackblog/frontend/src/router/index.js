@@ -11,6 +11,15 @@ import Layout from '../views/layout/Layout'
 // dashboard
 const dashboard = _import('dashboard/index')
 
+// Introduction
+const Introduction = _import('introduction/index')
+const PostIntro = _import('introduction/post/index')
+
+
+// Components
+const Tinymce = _import('components/tinymce/index')
+const Draglist = _import('components/draglist/index')
+
 // permission
 const Permission = _import('permission/index')
 
@@ -44,14 +53,13 @@ export const constantRouterMap = [
     path: '/',
     name: 'Homepage',
     redirect: '/dashboard',
-
     component: Layout,
     hidden: true,
     children: [{
       path: 'dashboard',
       component: dashboard
-    }]
-  }
+    }]}
+  
 ]
 
 export default new Router({
@@ -68,5 +76,23 @@ export const asyncRouterMap = [
     meta: {group: [1], requireAuth: true},
     noDropdown: true,
     children: [{path: 'index', component: Permission, name: 'Permission test page', meta: {group: [1], requireAuth: true}}]
-  }
+  }, {
+      path: '/introduction',
+      component: Layout,
+      redirect: '/introduction/index',
+      name: 'Introduction',
+      children: [
+        {path: 'index', component: Introduction, name: 'introduction'}, 
+        {path: 'post', component: PostIntro, name: 'postIntro'}
+        
+      ]
+    },{
+      path: '/components',
+      component: Layout,
+      name: 'Components',
+      children: [
+        {path: 'tinymce', component: Tinymce, name: 'Tinymce'},
+        {path: 'draglist', component: Draglist, name: 'Draglist'}
+      ]
+    }
 ]
