@@ -18,6 +18,7 @@ class PostCreateUpdateSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'publish',
+            'status',
         ]
 
 post_detail_url = HyperlinkedIdentityField(view_name = 'posts-api:detail', lookup_field = 'slug')
@@ -34,6 +35,8 @@ class PostListSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'publish',
+            'status',
+            'timestamp',
         ]
 
 class PostDetailSerializer(serializers.ModelSerializer):
